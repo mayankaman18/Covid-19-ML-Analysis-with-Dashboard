@@ -12,8 +12,8 @@ import os
 # It performs Data Loading, Preprocessing, EDA, and Time Series Forecasting.
 
 # %%
-def load_and_preprocess_data(file_path=r"C:\Users\sif-\Desktop\archive\full_grouped.csv", country="United States"):
-    print(f"🚀 Loading OWID COVID-19 Dataset from local file: {file_path}...")
+def load_and_preprocess_data(file_path="data/full_grouped.csv", country="United States"):
+    print(f"Loading OWID COVID-19 Dataset from local file: {file_path}...")
     
     try:
         # Load all columns first
@@ -38,9 +38,9 @@ def load_and_preprocess_data(file_path=r"C:\Users\sif-\Desktop\archive\full_grou
         existing_cols = [c for c in cols if c in df.columns]
         df = df[existing_cols]
         
-        print("✅ Data loaded successfully from local file!")
+        print("Data loaded successfully from local file!")
     except Exception as e:
-        print(f"⚠️ Failed to download data ({e}). Generating synthetic data for demonstration.")
+        print(f"Failed to download data ({e}). Generating synthetic data for demonstration.")
         dates = pd.date_range(start="2020-03-01", end="2023-01-01", freq="D")
         np.random.seed(42)
         new_cases = np.abs(np.random.normal(loc=50000, scale=20000, size=len(dates)))
@@ -82,7 +82,7 @@ def load_and_preprocess_data(file_path=r"C:\Users\sif-\Desktop\archive\full_grou
 
 # %%
 def perform_eda(df):
-    print("\n📊 Starting Exploratory Data Analysis (EDA)...")
+    print("\nStarting Exploratory Data Analysis (EDA)...")
     
     if not os.path.exists("plots"):
         os.makedirs("plots")
@@ -99,7 +99,7 @@ def perform_eda(df):
     plt.tight_layout()
     plt.savefig('plots/correlation_matrix.png')
     plt.close()
-    print("✅ Correlation Heatmap saved to 'plots/correlation_matrix.png'")
+    print("Correlation Heatmap saved to 'plots/correlation_matrix.png'")
     
     # 2. Daily New Cases Trend
     plt.figure(figsize=(10, 5))
@@ -111,7 +111,7 @@ def perform_eda(df):
     plt.tight_layout()
     plt.savefig('plots/daily_new_cases.png')
     plt.close()
-    print("✅ Daily New Cases trend plot saved to 'plots/daily_new_cases.png'")
+    print("Daily New Cases trend plot saved to 'plots/daily_new_cases.png'")
     
     # 3. 7-Day Rolling Average of New Cases
     plt.figure(figsize=(10, 5))
@@ -127,7 +127,7 @@ def perform_eda(df):
     plt.tight_layout()
     plt.savefig('plots/rolling_avg_cases.png')
     plt.close()
-    print("✅ 7-Day Rolling Average plot saved to 'plots/rolling_avg_cases.png'")
+    print("7-Day Rolling Average plot saved to 'plots/rolling_avg_cases.png'")
 
     # 4. Cumulative Cases and Deaths (Area Plot)
     plt.figure(figsize=(10, 5))
@@ -142,9 +142,9 @@ def perform_eda(df):
     plt.tight_layout()
     plt.savefig('plots/cumulative_area_plot.png')
     plt.close()
-    print("✅ Cumulative Area Plot saved to 'plots/cumulative_area_plot.png'")# %%
+    print("Cumulative Area Plot saved to 'plots/cumulative_area_plot.png'")# %%
 def build_arima_model(df):
-    print("\n📈 Building ARIMA Forecasting Model...")
+    print("\nBuilding ARIMA Forecasting Model...")
     
     # We will forecast 'new_cases'.
     # We resample to weekly freq to smooth noise a bit and speed up ARIMA.
@@ -189,13 +189,13 @@ def build_arima_model(df):
     plt.tight_layout()
     plt.savefig('plots/arima_forecast.png')
     plt.close()
-    print("✅ Forecasting plot saved to 'plots/arima_forecast.png'")
+    print("Forecasting plot saved to 'plots/arima_forecast.png'")
 
 # %%
 if __name__ == "__main__":
     import sys
-    dataset_path = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\sif-\Desktop\archive\full_grouped.csv"
+    dataset_path = sys.argv[1] if len(sys.argv) > 1 else "data/full_grouped.csv"
     us_data = load_and_preprocess_data(dataset_path)
     perform_eda(us_data)
     build_arima_model(us_data)
-    print("\n🎉 All tasks completed successfully!")
+    print("\nAll tasks completed successfully!")
