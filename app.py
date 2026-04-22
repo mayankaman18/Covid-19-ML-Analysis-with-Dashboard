@@ -150,7 +150,7 @@ with st.spinner("Rendering Global Map..."):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
-    st.plotly_chart(fig_map, use_container_width=True)
+    st.plotly_chart(fig_map, width="stretch")
 
 st.markdown("---")
 
@@ -204,7 +204,7 @@ with col1:
         plot_bgcolor='rgba(0,0,0,0)',
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
     )
-    st.plotly_chart(fig_new_cases, use_container_width=True)
+    st.plotly_chart(fig_new_cases, width="stretch")
 
 with col2:
     st.subheader("Cumulative Cases & Deaths (Log Scale)")
@@ -222,7 +222,7 @@ with col2:
         plot_bgcolor='rgba(0,0,0,0)',
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
     )
-    st.plotly_chart(fig_cum, use_container_width=True)
+    st.plotly_chart(fig_cum, width="stretch")
 
 st.markdown("---")
 
@@ -276,7 +276,7 @@ else:
                     plot_bgcolor='rgba(0,0,0,0)',
                     legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
                 )
-                st.plotly_chart(fig_arima, use_container_width=True)
+                st.plotly_chart(fig_arima, width="stretch")
                 
         except Exception as e:
             st.error(f"Failed to fit ARIMA model on this subset: {e}")
